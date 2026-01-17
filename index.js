@@ -5,9 +5,8 @@ import userRoutes from "./routes/user.routes.js";
 
 const app = express();
 
-app.use(express.json({ limit: "40kb" }));
-app.use(express.urlencoded({ limit: "40kb", extended: true }));
 app.use(cors());
+app.use(express.json());
 const PORT = process.env.PORT || 8080;
 const MONGO_URL =
   "mongodb+srv://rumjotsingh12345:4HzmDWqQRPEesSZe@zerodha.6lip7.mongodb.net/";

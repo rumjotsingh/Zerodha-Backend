@@ -25,7 +25,11 @@ const login = async (req, res) => {
 
       user.token = token;
       await user.save();
-      return res.status(200).json({ token: token });
+      return res.status(200).json({
+        message: "User Login ",
+        success: true,
+        token: token,
+      });
     } else {
       return res.status(401).json({ message: "Invalid Username or password" });
     }
@@ -48,14 +52,21 @@ const register = async (req, res) => {
     const newUser = new User({
       name: name,
       username: username,
+
       password: hashedPassword,
     });
 
     await newUser.save();
 
-    res.status(200).json({ message: "User Registered" });
+    res.status(200).json({
+      success: true,
+      message: "User Registered",
+    });
   } catch (e) {
-    res.json({ message: `Something went wrong ${e}` });
+    res.json({
+      success: false,
+      message: `Something went wrong ${e}`,
+    });
   }
 };
 const allHoldings = async (req, res) => {
@@ -90,4 +101,12 @@ const newOrders = async (req, res) => {
     res.json({ message: error });
   }
 };
-export { login, register, allHoldings, allPositions, newOrders };
+const getNewOrders = async (req, res) => {
+  try {
+    let AllOrders = await OrdersModel.find({});
+    return res.json(AllOrders);
+  } catch (err) {
+    res.json({ message: err });
+  }
+};
+export { login, register, allHoldings, allPositions, newOrders, getNewOrders };
